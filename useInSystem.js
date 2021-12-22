@@ -3,7 +3,7 @@ const cheerio = require("cheerio");
 const fs = require("fs");
 const path = require("path");
 
-const pdfkit = require('pdfkit');
+const pdfkit = require("pdfkit");
 
 let url = "https://en.wikipedia.org/wiki/A#Use_in_writing_systems";
 
@@ -37,39 +37,64 @@ function extractHtml(html) {
   let text6 = $(eleArr6).text();
   let text7 = $(eleArr7).text();
   let text8 = $(eleArr8).text();
-  
-  //   let headtext = $(heading).text();
-  //   let head1text = $(heading1).text();
-  //   let head2text = $(heading2).text();
-  //   let head3text = $(heading3).text();
-  //   arr.push(JSON.stringify(head2text));
-  //   arr.push(JSON.stringify(heading3));
-  //   arr.push(JSON.stringify(headtext));
-  //   arr.push(JSON.stringify(head1text));
-  
-  let arr = [];
-  arr.push(text2);
-  arr.push(text3);
-  arr.push(text4);
-  arr.push(text5);
-  arr.push(text6);
-  arr.push(text7);
 
-  let folderPath = path.join(__dirname, "useInSystem-Info");
-  dirCreater(folderPath);
-  let filePath = path.join(folderPath, "info.pdf");
+  let headtext = $(heading).text();
+  let head1text = $(heading1).text();
+  let head2text = $(heading2).text();
+  let head3text = $(heading3).text();
 
-  let text = JSON.stringify(arr);
-  let pdfDoc = new pdfkit();
-  pdfDoc.pipe(fs.createWriteStream(filePath));
-  pdfDoc.text(text);
-  pdfDoc.end();
+  let str =
+    headtext +
+    "\n" +
+    head1text +
+    "\n" +
+    text2 +
+    text3 +
+    text4 +
+    text5 +
+    "\n" +
+    head2text +
+    "\n" +
+    text6 +
+    "\n" +
+    head3text +
+    "\n" +
+    text7 +
+    text8;
 
-  // fs.writeFileSync(filePath,);
-}
-
-function dirCreater(folderPath) {
-  if (fs.existsSync(folderPath) == false) {
-    fs.mkdirSync(folderPath);
+  if (!fs.existsSync("./useInSystem.txt")) {
+    // fs.mkdirSync('./useInSystem.txt');
+    fs.writeFileSync("./useInSystem.txt", str);
   }
 }
+
+// let arr = [];
+// arr.push(text2);
+// arr.push(text3);
+// arr.push(text4);
+// arr.push(text5);
+// arr.push(text6);
+// arr.push(text7);
+//   arr.push(JSON.stringify(head2text));
+//   arr.push(JSON.stringify(heading3));
+//   arr.push(JSON.stringify(headtext));
+//   arr.push(JSON.stringify(head1text));
+
+//   let folderPath = path.join(__dirname, "useInSystem-Info");
+//   dirCreater(folderPath);
+//   let filePath = path.join(folderPath, "info.pdf");
+
+//   let text = JSON.stringify(arr);
+//   let pdfDoc = new pdfkit();
+//   pdfDoc.pipe(fs.createWriteStream(filePath));
+//   pdfDoc.text(text);
+//   pdfDoc.end();
+
+//   // fs.writeFileSync(filePath,);
+// }
+
+// function dirCreater(folderPath) {
+//   if (fs.existsSync(folderPath) == false) {
+//     fs.mkdirSync(folderPath);
+//   }
+// }

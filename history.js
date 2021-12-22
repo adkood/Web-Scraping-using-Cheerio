@@ -25,6 +25,7 @@ function extractHtml(html) {
   let eleArr6 = $(".mw-parser-output>p:nth-child(26)");
   let eleArr7 = $(".mw-parser-output>p:nth-child(27)");
 
+  let eleArr8 = $(".mw-parser-output>h3:nth-child(20)");
   
   let text1 = $(eleArr1).text();
   let text2 = $(eleArr2).text();
@@ -34,38 +35,49 @@ function extractHtml(html) {
   let text6 = $(eleArr6).text();
   let text7 = $(eleArr7).text();
   
-  // let eleArr8 = $(".mw-parser-output>h3:nth-child(20)");
-  // let text8 = $(eleArr8).text();
+  let text8 = $(eleArr8).text();
   // let str = text1.concat(text2).concat(text3).concat(text4).concat(text5).concat(text6).concat(text7);
   
-  let arr=[];
-  arr.push(text1);
-  arr.push(text2);
-  arr.push(text3);
-  arr.push(text4);
-  arr.push(text5);
-  arr.push(text6);
-  arr.push(text7);
 
 
-  let folderPath = path.join(__dirname , 'history-Info');
-  dirCreater(folderPath);
-  let filePath = path.join(folderPath , 'info.pdf');
-
-  let text = JSON.stringify(arr);
-  let pdfDoc = new pdfkit();
-  pdfDoc.pipe(fs.createWriteStream(filePath));
-  pdfDoc.text(text);
-  pdfDoc.end();
-
-  // fs.writeFileSync(filePath,);
+// ---------------------FOR TXT FILE---------------------------------------------------
+let  str = text1 + text2 +text3 + "\n"+text8+"\n"+text4 + text5 + text6 + text7;
+if(!fs.existsSync('./history.txt')){
+      // fs.mkdirSync('./history.txt');
+      fs.writeFileSync('./history.txt',str);
+}
 
 }
 
-function dirCreater(folderPath)
-{
-  if(fs.existsSync(folderPath) == false)
-  {
-    fs.mkdirSync(folderPath);
-  }
-}
+// ------------FOR PDF------------------------------------------------------------
+
+// let arr=[];
+// arr.push(text1);
+// arr.push(text2);
+// arr.push(text3);
+// arr.push(text4);
+// arr.push(text5);
+// arr.push(text6);
+// arr.push(text7);
+
+//   let folderPath = path.join(__dirname , 'history-Info');
+//   dirCreater(folderPath);
+//   let filePath = path.join(folderPath , 'info.pdf');
+
+//   let text = JSON.stringify(arr);
+//   let pdfDoc = new pdfkit();
+//   pdfDoc.pipe(fs.createWriteStream(filePath));
+//   pdfDoc.text(text);
+//   pdfDoc.end();
+
+//   // fs.writeFileSync(filePath,);
+
+// }
+
+// function dirCreater(folderPath)
+// {
+//   if(fs.existsSync(folderPath) == false)
+//   {
+//     fs.mkdirSync(folderPath);
+//   }
+// }

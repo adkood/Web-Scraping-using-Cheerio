@@ -25,6 +25,7 @@ function cb(err,response,html)
 function extractHtml(html)
 {
     let $ = cheerio.load(html);
+    let heading = $(".mw-parser-output>h2:nth-child(42)");
     let eleArr1 = $(".mw-parser-output>p:nth-child(45)");
     let eleArr2 = $(".mw-parser-output>p:nth-child(46)");
     let eleArr3 = $(".mw-parser-output>p:nth-child(47)");
@@ -38,39 +39,49 @@ function extractHtml(html)
     let text4 = $(eleArr4).text();
     let text5 = $(eleArr5).text();
     let text6 = $(eleArr6).text();
+    let headtext = $(heading).text();
     
-    // let heading = $(".mw-parser-output>h2:nth/-child(42)");
-    // let headtext = $(heading).text();
-    // let arr = text1.concat(text2).concat(text3).concat(text4).concat(text5).concat(text6);
-    let arr=[];
-    arr.push(text1);
-    arr.push(text2);
-    arr.push(text3);
-    arr.push(text4);
-    arr.push(text5);
-    arr.push(text6);
 
+ // -----------------------for TXT file-----------------------------------------------   
     
-    let folderPath = path.join(__dirname , 'OtherUses-info');
-    dirCreater(folderPath);
-    let filePath = path.join(folderPath , 'info.pdf');
-    let text = JSON.stringify(arr);
+    let arr = headtext+"\n"+text1+text2+text3+text4+text5+text6;
 
-    let pdfDoc = new pdfkit();
-    pdfDoc.pipe(fs.createWriteStream(filePath));
-    pdfDoc.text(text);
-    pdfDoc.end();
-
-    // fs.writeFileSync(filePath,);
-
-}
-
-function dirCreater(folderPath)
-{
-    if(fs.existsSync(folderPath) == false)
+    if(!fs.existsSync('./otherUses.txt'))
     {
-        fs.mkdirSync(folderPath);
+        fs.writeFileSync('./otherUses.txt',arr);
     }
-}
+} 
+
+
+
+//----------------------------FOR PDF------------------------------------------------------------
+// let arr=[];
+// arr.push(text1);
+// arr.push(text2);
+// arr.push(text3);
+// arr.push(text4);
+// arr.push(text5);
+// arr.push(text6);
+//     let folderPath = path.join(__dirname , 'OtherUses-info');
+//     dirCreater(folderPath);
+//     let filePath = path.join(folderPath , 'info.pdf');
+//     let text = JSON.stringify(arr);
+
+//     let pdfDoc = new pdfkit();
+//     pdfDoc.pipe(fs.createWriteStream(filePath));
+//     pdfDoc.text(text);
+//     pdfDoc.end();
+
+//     // fs.writeFileSync(filePath,);
+
+// }
+
+// function dirCreater(folderPath)
+// {
+//     if(fs.existsSync(folderPath) == false)
+//     {
+//         fs.mkdirSync(folderPath);
+//     }
+// }
 
 
